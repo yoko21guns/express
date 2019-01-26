@@ -113,9 +113,74 @@ app.use(logger('dev'));
  */
 //画面を表示する
 app.get('/', function(req, res) {
-  res.send('Hello Eureka!');
+  // res.send('Hello from apply!');
+  res.render('index');
 });
 
+// ----- (1) Redmineのチケット情報を取得する[成功] -----------------------------
+/*
+const Redmine = require('node-redmine');
+
+const hostName = 'http://localhost/redmine/projects/webfusen/';  // ローカルのRedmineURL
+const config = {
+  apiKey: '5b9e1b103e8a9804dd9a37de4aebb45395c049b4'  //takaoki
+};
+const redmine = new Redmine(hostName, config);
+
+// Issue を5件取得する
+redmine.issues({
+  // limit: 5
+}, (error, data) => {
+  if(error) throw error;
+  
+  // JSON を2スペースで整形して表示する
+  data.issues.forEach((issue) => {
+    console.log(JSON.stringify(issue, null, '  '));
+  });
+});
+*/
+// --------------------------------------------------------------------
+
+// ----- (2) Redmineのチケット情報を取得する[成功] -----------------------------
+/*
+const Redmine = require('node-redmine');
+
+const hostName = 'http://localhost/redmine/projects/webfusen/';  // ローカルのRedmineURL
+const config = {
+  apiKey: '5b9e1b103e8a9804dd9a37de4aebb45395c049b4'  //takaoki
+};
+const redmine = new Redmine(hostName, config);
+
+// Issue を5件取得する
+redmine.issues({
+  // limit: 1
+}, (error, data) => {
+  if(error) throw error;
+  
+  // JSON を2スペースで整形して表示する
+  data.issues.forEach((issue) => {
+    // console.log("issue="+issue);
+    const json = JSON.stringify(issue, null, '  '); // issueをjson形式に変換
+    console.log("json="+json+"\n\n");
+    
+    const obj = JSON.parse(json);                   // jsonをobj形式に変換
+    console.log("obj="+obj+"\n\n");                 // この出力の仕方だと[object object]になる
+    console.log("obj="+obj.id+"\n\n");              // この出力の仕方だとidが取得できるになる
+    console.log("obj2="+obj.custom_fields[0].value+"\n\n");   // この出力の仕方だとカスタムフィールドの値を取得できる
+
+    // [2, 5, 9].forEach(function(element, index, array) {
+    //   console.log(index + ":" + element);
+    // });
+    obj.custom_fields.forEach(function(element, index) {
+      console.log(element, index);
+    });
+
+  });
+});
+*/
+// --------------------------------------------------------------------
+
+/*
 app.get('/getCode.json', function(req, res) {
   const url = "https://192.168.3.10/redmine/projects/webfusen_manage/issues.json?query_id=148&key=8f702c521c7427c29effd1c932eda2a1124219c5";
   // const name = req.body.name;
@@ -128,3 +193,4 @@ app.get('/getCode.json', function(req, res) {
   // console.log(json);
   // res.send(json);
 });
+*/
