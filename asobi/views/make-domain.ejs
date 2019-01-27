@@ -1,0 +1,58 @@
+<!--
+************************************************************************** 
+    Program Name    :   登録した単語からドメイン名の候補を表示してくれる
+    Author          :   Iguchi Yoko
+    Created Date    :   2019/01/27
+    Update Date     :   2019/01/27
+**************************************************************************
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title><%= title %></title>
+    <script type="text/javascript">
+        function make() {
+            const words = ['arcanum', 'felix', 'brave', 'dream', 'kwjm', 'maru'];
+            const gtlds = ['.com', '.net', '.org', '.info', '.biz'];
+            // ----- 繰り返し表示 ----------------------           
+            words.forEach( function( value ) {
+                console.log("words = " + value);
+            });
+            gtlds.forEach( function (value) {
+                console.log("gtld = " + value);
+            });
+            // ----- 枠内にランダムで単語が表示される ----------------
+            const word_num1 = Math.floor(words.length*Math.random());
+            word = document.getElementById("output_word1");
+            // word.innerHTML = words[word_num1];
+
+            const word_num2 = Math.floor(words.length*Math.random());
+            word = document.getElementById("output_word2");
+            // word.innerHTML = words[word_num2];            
+
+            const gtld_num = Math.floor(gtlds.length*Math.random());
+            gtld = document.getElementById("output_gtld");
+            // gtld.innerHTML = gtlds[gtld_num];
+
+            const domain = document.getElementById("output");
+            domain.innerHTML = words[word_num1] + '<span class="f-color">' + words[word_num2] + '</span>' + gtlds[gtld_num];
+        }
+    </script>
+</head>
+<body>
+    <div class="center">
+        <h1><%= title %></h1>
+        <form name="form1" action="#">
+            <div class="box18">
+                <p id="output">ここに表示するよ！</p>
+                <!-- <p id="output_word1">ここに表示するよ！</p>
+                <p id="output_word2"></p>
+                <p id="output_gtld"></p> -->
+            </div>
+            <input type="button" value="表示" onclick="make()" /><br />
+        </form>
+    </div>
+</body>
+</html>
